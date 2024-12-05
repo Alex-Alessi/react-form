@@ -13,11 +13,18 @@ function App() {
 
     const newArticleList = [...articleList, newArticle];
     setArticleList(newArticleList);
-    console.log(articleList);
+    setTitleField("");
   };
 
   const handleTitleChange = (e) => {
     setTitleField(e.target.value);
+  };
+
+  const handleDetele = (index) => {
+    const newArticleList = articleList.filter(
+      (article, articleIndex) => articleIndex !== index
+    );
+    setArticleList(newArticleList);
   };
 
   return (
@@ -49,9 +56,16 @@ function App() {
         <section>
           <h4>Post list</h4>
           <div className="row">
-            {articleList.map((article) => (
-              <div className="col-4">
+            {articleList.map((article, index) => (
+              <div key={index} className="col-4 my-2">
                 <div className="card">
+                  <button
+                    className="btn btn-danger col-4"
+                    key={index}
+                    onClick={() => handleDetele(index)}
+                  >
+                    delete
+                  </button>
                   <div className="card-body">
                     <h2>{article.title}</h2>
                   </div>
