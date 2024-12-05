@@ -1,11 +1,23 @@
 import { useState } from "react";
 
 function App() {
-  const titleField = "";
-  const articleList = [];
+  const [titleField, setTitleField] = useState("");
+  const [articleList, setArticleList] = useState([]);
 
   const handleInsertPostSubmit = (e) => {
     e.preventDefault();
+
+    const newArticle = {
+      title: titleField,
+    };
+
+    const newArticleList = [...articleList, newArticle];
+    setArticleList(newArticleList);
+    console.log(articleList);
+  };
+
+  const handleTitleChange = (e) => {
+    setTitleField(e.target.value);
   };
 
   return (
@@ -19,7 +31,13 @@ function App() {
                 <label className="form-label" htmlFor="post-title">
                   Titolo
                 </label>
-                <input type="text" className="form-control" id="post-title" />
+                <input
+                  type="text"
+                  className="form-control"
+                  id="post-title"
+                  value={titleField}
+                  onChange={handleTitleChange}
+                />
               </div>
 
               <div className="col-12">
@@ -31,13 +49,15 @@ function App() {
         <section>
           <h4>Post list</h4>
           <div className="row">
-            <div className="col-4">
-              <div className="card">
-                <div className="card-body">
-                  <h2>Post title</h2>
+            {articleList.map((article) => (
+              <div className="col-4">
+                <div className="card">
+                  <div className="card-body">
+                    <h2>{article.title}</h2>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </section>
       </div>
